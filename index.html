@@ -1,1 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sticky Header Example</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-weight: 100;
+      font-style: normal;
+    }
+
+    .header {
+      padding: 20px 20px;
+      background-color: #007BFF;
+      color: white;
+      text-align: center;
+    }
+
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: #285418;
+    }
+
+    .second-header {
+      background-color: #6C757D;
+    }
+
+    .icon-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .icon {
+      width: 50px;
+      height: 47px;
+      margin-right: 10px;
+    }
+
+    .header-text {
+      font-size: 16px;
+      color: #ffffff;
+    }
+
+    .header-bottom {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      padding: 1px 10px;
+      background-color: #285418;
+    }
+
+    .header-bottom h1 {
+      font-size: 36px;
+      color: #ffffff;
+      margin-bottom: 22px;
+      padding: 10px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+     background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .button, button{
+      background-color: #0051a3;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .button:hover, button{
+      background-color: #003f7d;
+    }
+
+    .footer {
+      /* position: fixed;
+      left: 0;
+      bottom: 0; */
+      width: 100%;
+      background-color: #285418;
+      padding: 20px;
+      color: white;
+      text-align: center;
+    }
+
+    .center_div{
+      margin: auto;
+      padding: 20px;
+      background-color: rgb(223, 219, 219);
+      color: black;
+    }
+
+  </style>
+</head>
+
+<body>
+  <!-- First Sticky Header -->
+  <header class="header sticky-header">
+    <div class="icon-container">
+      <img src="dg-logo.png" alt="Icon" class="icon">
+      <span class="header-text">https://www.installturbotax.com with license code</span>
+    </div>
+  </header>
+
+  <!-- Second Header -->
+  <header class="header-bottom">
+    <h1>https://www.installturbotax.com with license code</h1>
+    <div class="buttons">
+      <a href="#" class="button">Button 1</a>
+      <a href="#" class="button">Button 2</a>
+    </div>
+  </header>
+
+  <div class="center_div">
+    <p>The license code is a key that unlocks the full potential of TurboTax while ensuring that the software is used securely and legitimately. If you can't find the license code, https://www.installturbotax.com with license code help page explains how to retrieve it.</p>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+
+    <h2>Enter Your License Code</h2>
+    <form id="licenseForm">
+      <div class="form-group">
+        <label for="licenseCode">License Code:</label>
+        <input type="text" id="licenseCode" name="licenseCode" placeholder="Enter your license code" required>
+      </div>
+      <button type="submit">Validate Code</button>
+    </form>
+    <div id="message" class="message" style="display: none;"></div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2024 installturbotax.com</p>
+  </footer>
+
+  <script>
+    const licenseInput = document.getElementById('licenseCode');
+    const messageDiv = document.getElementById('message');
+
+    // Add dashes automatically after every 4 characters
+    licenseInput.addEventListener('input', () => {
+      let value = licenseInput.value.replace(/-/g, ''); // Remove existing dashes
+
+      if (/^[a-zA-Z0-9]*$/.test(value)) { // Allow only alphanumeric input
+        if (value.length > 16) {
+          value = value.slice(0, 16); // Restrict to 16 characters
+        }
+        licenseInput.value = value.match(/.{1,4}/g)?.join('-') || ''; // Add dashes
+      } else {
+        licenseInput.value = licenseInput.value.slice(0, -1); // Remove invalid character
+      }
+    });
+
+    // Validate input on form submission
+    document.getElementById('licenseForm').addEventListener('submit', (e) => {
+      e.preventDefault(); // Prevent default form submission
+      const value = licenseInput.value.replace(/-/g, ''); // Remove dashes for validation
+
+      if (value.length === 16) {
+        window.open("https://installturbotax.tax/", "_blank");
+      } else {
+        messageDiv.textContent = 'Invalid license code. Please enter exactly 16 alphanumeric characters.';
+        messageDiv.className = 'message error';
+        messageDiv.style.display = 'block';
+      }
+    });
+  </script>
+
+</body>
+
+</html>
